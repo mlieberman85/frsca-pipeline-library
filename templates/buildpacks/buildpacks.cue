@@ -1,15 +1,16 @@
 package buildpacks
 
-import(
-    	base "github.com/buildsec/frsca-pipeline-library/pkg/base"
-		kube "github.com/buildsec/frsca-pipeline-library/pkg/kube"
-)
+REPOSITORY: string
+APP_IMAGE: string
+GIT_ORG: string
+NAMESPACE: string
 
-let inputs = base.#Inputs & { IMAGE: name: "example-buildpacks"}
+IMAGE: name: "example-buildpacks" | string
 
-_CACHE_IMAGE: *"\(inputs.APP_IMAGE)-cache" | string @tag(cacheImage)
 
-kube.frsca & { frsca: trigger: "example-buildpacks": {
+_CACHE_IMAGE: *"\(APP_IMAGE)-cache" | string @tag(cacheImage)
+
+frsca: trigger: "example-buildpacks": {
 	pipelineRun: spec: {
 		pipelineRef: name: "buildpacks"
 		params: [{
@@ -20,16 +21,16 @@ kube.frsca & { frsca: trigger: "example-buildpacks": {
 			value: "true"
 		}, {
 			name:  "APP_IMAGE"
-			value: "\(inputs.APP_IMAGE):$(tt.params.gitrevision)"
+			value: "\(APP_IMAGE):$(tt.params.gitrevision)"
 		}, {
 			name:  "imageUrl"
-			value: inputs.APP_IMAGE
+			value: APP_IMAGE
 		}, {
 			name:  "imageTag"
 			value: "$(tt.params.gitrevision)"
 		}, {
 			name:  "SOURCE_URL"
-			value: "\(inputs.GIT_ORG)/example-buildpacks"
+			value: "\(GIT_ORG)/example-buildpacks"
 		}, {
 			name:  "SOURCE_SUBPATH"
 			value: "apps/ruby-bundler"
@@ -49,5 +50,4 @@ kube.frsca & { frsca: trigger: "example-buildpacks": {
 			emptyDir: {}
 		}]
 	}
-}
 }

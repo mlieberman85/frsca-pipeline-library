@@ -7,7 +7,6 @@ import (
 
 	"tool/cli"
 	"tool/file"
-	kube "github.com/buildsec/frsca-pipeline-library/pkg/kube"
 )
 
 globYaml: file.Glob & {
