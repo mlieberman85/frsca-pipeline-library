@@ -1,6 +1,6 @@
 package frsca
 
-// How to run: cue import -p frsca -f foo.yaml -o - | cue apply
+// How to run: cue import -p frsca -f foo.yaml; cue apply
 project:    "foo"
-buildType:  "buildpacks"
+buildType:  "go"
 repository: "github.com/foo/bar"

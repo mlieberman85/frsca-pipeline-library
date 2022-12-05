@@ -5,7 +5,7 @@ APP_IMAGE: string
 GIT_ORG: string
 NAMESPACE: string
 
-IMAGE: name: "example-buildpacks" | string
+IMAGE: name: *"example-buildpacks" | string
 
 
 _CACHE_IMAGE: *"\(APP_IMAGE)-cache" | string @tag(cacheImage)

@@ -20,6 +20,7 @@ make setup-minikube
 make setup-frsca
 
 # Run a new pipeline.
+make setup-examples
 make example-sample-pipeline
 
 # Wait until it completes.
@@ -32,15 +33,30 @@ export TASK_RUN=$(tkn pr describe --last -o json | jq -r '.status.taskRuns | key
 ## If using the registry-proxy
 # export IMAGE_URL="$(echo "${IMAGE_URL}" | sed 's#'${REGISTRY}'#127.0.0.1:5000#')"
 
+export REPO="$(echo -n ${IMAGE_URL} | sed 's|:[^/]*$||')"
+
 # Double check that the attestation and the signature were uploaded to the OCI.
-crane ls "$(echo -n ${IMAGE_URL} | sed 's|:[^/]*$||')"
+crane ls ${REPO}
+export SBOM=$(crane ls ${REPO} | grep \.sbom)
+export ATTESTATION=$(crane ls ${REPO} | grep \.att)
+#export SBOM_DIGEST=$(crane digest ${REPO}:${SBOM})
+#sget ${REPO}:${SBOM}@${SBOM_DIGEST} > outputs/${SBOM}.json
+#cat outputs/${SBOM}.json | jq
+
 
 # Verify the image and the attestation.
 cosign verify --key k8s://tekton-chains/signing-secrets "${IMAGE_URL}"
 cosign verify-attestation --type slsaprovenance --key k8s://tekton-chains/signing-secrets "${IMAGE_URL}"
+cosign download attestation "${IMAGE_URL}" | jq -r .payload | base64 --decode > outputs/${ATTESTATION}.json
+cat outputs/${ATTESTATION}.json | jq
 
 # Download the SBOM
-cosign download sbom "${IMAGE_URL}"
+export OUTPUT_LOC=outputs/${SBOM}.json
+cosign download sbom "${IMAGE_URL}" > ${OUTPUT_LOC}
+export TMPFILE=$(mktemp)
+jq --arg r "${REPO}" '.name=$r' ${OUTPUT_LOC} > ${TMPFILE} && mv ${TMPFILE} ${OUTPUT_LOC}
+jq "" outputs/${SBOM}.json 
+../artifact-ff/bin/guacone files --creds neo4j:test1234 --db-addr neo4j://localhost:7687 outputs/
 
 # Verify the signature and attestation with tkn.
 tkn chain signature "${TASK_RUN}"
