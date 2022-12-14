@@ -1,14 +1,18 @@
 package policy
 
+import (
+    kyvernoV1 "github.com/kyverno/kyverno/api/kyverno/v1"
+)
+
 #Inputs: {
     NAME: string
     IMAGE_GLOB: string
     KEY_REF: string
-} 
+}
 
 #Policy: {
     in: #Inputs
-    frsca: clusterPolicy: (in.NAME): {
+    frsca: clusterPolicy: { (in.NAME): kyvernoV1.#ClusterPolicy & {
         spec: rules: [{
             verifyImages: [{
                 image: in.IMAGE_GLOB
@@ -30,4 +34,5 @@ package policy
             }
         }
     }
+}
 }

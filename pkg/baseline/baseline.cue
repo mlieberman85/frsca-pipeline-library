@@ -15,7 +15,7 @@ frsca: task?: [_]: pipelineV1Beta1.#Task & {
 }
 
 #BaselineTaskSpec: pipelineV1Beta1.#TaskSpec & {
-    description?: #BaselineDescription
+    description: #BaselineDescription
 } 
 
 #BaselineDescription: "FOO"

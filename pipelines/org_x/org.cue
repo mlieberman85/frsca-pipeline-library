@@ -4,7 +4,7 @@ import (
     buildpacks "github.com/buildsec/frsca-pipeline-library/templates/buildpacks"
     go "github.com/buildsec/frsca-pipeline-library/templates/go"
     policy "github.com/buildsec/frsca-pipeline-library/pkg/policy"
-    baseline "github.com/buildsec/frsca-pipeline-library/pkg/baseline"
+    //baseline "github.com/buildsec/frsca-pipeline-library/pkg/baseline"
 )
 
 _IMAGE: name: "\(org)-\(dept)-\(team)-\(project)"
@@ -37,8 +37,3 @@ frsca: _policy1.frsca
 _policy2: policy.#Policy & {in: {NAME: "bar", IMAGE_GLOB: "bar/baz/*", KEY_REF: "{{ keys.data.mykey2 }}"}}
 frsca: _policy2.frsca
 
-baseline.frsca & {
-    task: "FOO": {
-
-    }
-}
