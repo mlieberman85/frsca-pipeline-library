@@ -170,9 +170,9 @@ frsca: trigger?: [Name=_]: {
 
 // assemble the trigger into a trigger template, binding, and event listener
 frsca: {
-	if frsca.trigger != _|_ for name, w in frsca.trigger {
-		triggerTemplate: "\(name)": w.triggerTemplate
-		triggerBinding: "\(name)": w.triggerBinding
-		eventListener: "\(name)": w.eventListener
-	}
-}
+ 	if frsca.trigger != _|_ for name, w in frsca.trigger {
+ 		triggerTemplate: "\(name)": w.triggerTemplate
+ 		triggerBinding: "\(name)": w.triggerBinding
+ 		eventListener: "\(name)": w.eventListener
+ 	}
+ }

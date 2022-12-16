@@ -7,8 +7,6 @@ _APP_IMAGE: *"\(_REPOSITORY)/\(_IMAGE.name)" | string @tag(appImage)
 _GIT_ORG: *"https://gitea-http.gitea:3000/frsca" | string @tag(gitOrg)
 _NAMESPACE: *"default" | string @tag(namespace)
 
-buildType: string
-
 // Below are resources required for all pipelines
 frsca: secret: "kube-api-secret": {
 	metadata: annotations: "kubernetes.io/service-account.name": "pipeline-account"
