@@ -5,7 +5,7 @@ import (
 )
 
 team: "team_z"
-buildType: "buildpacks" | "go"
+buildType: "go"
 
 _policy3: policy.#Policy & {in: {NAME: "baz", IMAGE_GLOB: "baz/*", KEY_REF: "{{ keys.data.mykey3 }}"}}
 frsca: _policy3.frsca
