@@ -2,7 +2,7 @@ package frscapipeline
 
 import (
     pipelineV1Beta1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
-    frscaclonetask "github.com/buildsec/frsca-pipeline-library/pkg/catalog/frscaclonetask"
+    frscaclonetask "github.com/buildsec/frsca-pipeline-library/pkg/catalog/tasks/frscaclonetask"
     frscatask "github.com/buildsec/frsca-pipeline-library/pkg/frscatask"
 )
 
@@ -29,8 +29,6 @@ frsca: pipeline?: [Name=_]: pipelineV1Beta1.#Pipeline & {
 	kind:       "Pipeline"
 	metadata: name: *Name | string
 }
-
-//frscaTotalTasks: frscaPreBuildTasks + frscaBuildTasks + frscaPostbuildTasks
 
 #baselinePipeline: {
     in: #Inputs

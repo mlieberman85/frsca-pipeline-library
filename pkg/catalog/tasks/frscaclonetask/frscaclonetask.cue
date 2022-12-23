@@ -4,7 +4,6 @@ import (
     frscatask "github.com/buildsec/frsca-pipeline-library/pkg/frscatask"
 )
 
-
 task: frscatask.frscaTask & {
     "git-clone": {
         spec: {

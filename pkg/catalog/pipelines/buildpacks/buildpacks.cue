@@ -10,6 +10,9 @@ IMAGE: name: *"example-buildpacks" | string
 
 _CACHE_IMAGE: *"\(APP_IMAGE)-cache" | string @tag(cacheImage)
 
+// FIXME: Get working with new baseline pipeline
+
+//TODO: Put actual pipeline, not just trigger here.
 frsca: trigger: "example-buildpacks": {
 	pipelineRun: spec: {
 		pipelineRef: name: "buildpacks"

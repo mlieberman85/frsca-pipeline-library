@@ -2,7 +2,7 @@ package frsca
 
 import (
     frscapipeline "github.com/buildsec/frsca-pipeline-library/pkg/frscapipeline"
-    frscabuildpackstask "github.com/buildsec/frsca-pipeline-library/pkg/catalog/frscabuildpackstask"
+    frscabuildpackstask "github.com/buildsec/frsca-pipeline-library/pkg/catalog/tasks/frscabuildpackstask"
 )
 
 testInputs: frscapipeline.#Inputs & {
@@ -12,7 +12,6 @@ testInputs: frscapipeline.#Inputs & {
     OUTPUT_ARTIFACT: "test-artifact"
     GIT_ORG: "test-org"
     GIT_REPO: "test-repo"
-    // TODO: Figure out why below doesn't work
     frscaBuildTasks: [frscabuildpackstask.task]
 }
 
